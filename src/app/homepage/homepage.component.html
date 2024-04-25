@@ -1,0 +1,73 @@
+<div class="top">
+    <p>Home</p>
+</div>
+<div class="body" >
+    <form form="#ngform" (ngSubmit)="onSubmit()">    
+    <div class="create">
+        <h2>Create New Estimate</h2>
+    <div class="grid-container">
+            <div class="grid-item" app-homepage>
+                <label for="productID" class="required">Product ID</label>
+                <input type="text"  class="input-field" style="margin-left: 2px; margin-bottom: 20px" id="productID" name="productID"  [(ngModel)]="addproductRequest.productID" placeholder="No Duplicates" required />
+            </div>
+            <div class="grid-item">
+                <label>Product Name</label>
+                <input type="text" id="productName" name="productName"   class="input-field" style="margin-left: 2px; margin-bottom: 20px" [(ngModel)]="addproductRequest.productName"/>
+            </div>
+            <div class="grid-item">
+                <label>Country</label>
+                <ng-select [items]="countries" bindLabel="country" bindValue="country" [(ngModel)]="selectedCountry"
+                  [ngModelOptions]="{standalone: true}">
+                  <ng-template ng-option-tmp let-item="item">
+                    {{item.country}} <br/>
+                </ng-template>
+                </ng-select>
+            </div>            
+            <div class="grid-item">
+                <label>Invoice Period</label>
+                <ng-select [items]="periods" 
+                            bindLabel="name" 
+                            bindValue="name" 
+                            [(ngModel)]="invoicePeriod" 
+                            style="height: 6vh; color: black; background-color: aliceblue; "  [ngModelOptions]="{standalone: true}">
+                 </ng-select>
+            </div>       
+            <div class="grid-item">
+                <label>Scrap Type</label>
+                <ng-select [items]="scraptypes" 
+                bindLabel="name" 
+                bindValue="name" 
+                [(ngModel)]="scrapType" 
+                style="height: 6vh; color: black; background-color: aliceblue;"  [ngModelOptions]="{standalone: true}">
+     </ng-select>
+            </div>
+            <div class="grid-item">
+                <label>Scrap Image</label>
+                <input type="file" (change)="onFileSelected($event)">
+            </div>
+            <div class="grid-item">
+                <label>Man cost(USD)</label>
+                <input type="number" id="manCost" name="manCost" class="input-field" style="margin-left: 2px; margin-bottom: 20px" [(ngModel)]="addproductRequest.manCost" (ngModelChange)="calculateEstimateCost()"/></div>
+            <div class="grid-item">
+                <label>Material Cost(USD)</label>
+                <input class="input-field" type="number" id="materialCost" name="materialCost" style="margin-left: 2px; margin-bottom: 20px" [(ngModel)]="addproductRequest.materialCost" (ngModelChange)="calculateEstimateCost()"/></div>
+            <div class="grid-item">
+                <label>Estimate Cost(USD)</label>
+                <input [disabled]="isButtonDisabled" class="input-field" type="number" id="estimateCost" name="estimateCost" style="margin-left: 2px; margin-bottom: 20px" [(ngModel)]="addproductRequest.estimateCost"/>
+            </div>
+            <div class="grid-item">
+                <label>Local Amount</label>
+                <input [disabled]="isButtonDisabled" class="input-field" type="number" id="localAmount" name="localAmount" style="margin-left: 2px; margin-bottom: 4px" [(ngModel)]="addproductRequest.localAmount" (ngModelChange)="calculateEstimateCost()"/>
+            </div>  
+            <div class="buttons">
+                <p-button  label="Generate Estimate" icon="pi pi-check" type="submit" (click)="onSubmit1(); showTopLeft()"></p-button>
+            </div>
+            <!-- <button type="submit" [disabled]="isButtonDisabled">Submit</button>
+            <button type="button" (click)="createForm()">Clear Form</button> -->
+    </div>
+
+    </div>
+</form>
+<div class="table">
+<app-tableview></app-tableview></div>
+</div>

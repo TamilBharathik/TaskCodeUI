@@ -1,0 +1,117 @@
+<div class="outer">
+  <div class="list">
+    <p>List View</p>
+    <div class="filter">
+      <label for="invoicePeriodFilter">Invoice Period:</label>
+<select id="invoicePeriodFilter" [(ngModel)]="selectedInvoicePeriod" (change)="applyFilter()">
+        <option value="">All</option>
+        <option value="Weekly">Weekly</option>
+        <option value="Fortnight">Fortnight</option>
+        <option value="Monthly">Monthly</option>
+        <option value="Half-Yearly">Half-Yearly</option>
+        <option value="Yearly">Yearly</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Table  -->
+  <p-table [value]="filteredProducts" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '30rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 8]"
+    [paginator]="true" [rows]="5" [showCurrentPageReport]="true" [globalFilterFields]="['active']">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="productName">Product Name<p-sortIcon field="productName"></p-sortIcon></th>
+        <th pSortableColumn="country">Country <p-sortIcon field="country"></p-sortIcon></th>
+        <th pSortableColumn="invoicePeriod">Invoice Period <p-sortIcon field="invoicePeriod"></p-sortIcon></th>
+        <th pSortableColumn="scrapType">Scrap Type<p-sortIcon field="scrapType"></p-sortIcon></th>
+        <th pSortableColumn="manCost">Man Cost(USD)<p-sortIcon field="manCost"></p-sortIcon></th>
+        <th pSortableColumn="materialCost">Material Cost(USD)<p-sortIcon field="materialCost"></p-sortIcon></th>
+        <th pSortableColumn="estimateCost">Estimate Cost(USD)<p-sortIcon field="estimateCost"></p-sortIcon></th>
+        <th pSortableColumn="localAmount">Local Amount<p-sortIcon field="localAmount"></p-sortIcon></th>
+        <th pSortableColumn="image">Scrap Image<p-sortIcon field="image"></p-sortIcon></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.productName }}</td>
+        <td>{{ product.country }}</td>
+        <td>{{ product.invoicePeriod }}</td>
+        <td>{{ product.scrapType }}</td>
+        <td>{{ product.manCost }}</td>
+        <td>{{ product.materialCost }}</td>
+        <td>{{ product.estimateCost }}</td>
+        <td>{{ product.localAmount }}</td>
+      
+
+        <td>
+          <div class="card flex justify-content-center">
+              <p-image [src]="product.imageUrl" width="50" [preview]="true"></p-image>
+          </div>
+      </td>
+        
+      </tr>   
+    </ng-template>
+    <!-- HTML -->
+    <ng-template pTemplate="footer">
+      <tr>
+          <td colspan="8">
+            <!-- <p-button (click)="showDialog()" label="Generate Invoice" [disabled]="selectedInvoicePeriod === 'All' || !selectedInvoicePeriod"></p-button> -->
+            <!-- <p-button (click)="showDialog()" label="Generate Invoice" [disabled]="selectedInvoicePeriod === 'All'  && getDatesAndPeriods[].compareInvoicePeriod === selectedInvoicePeriod"></p-button> -->
+            <p-button (click)="showDialog()" label="Generate Invoice" [disabled]="isGenerateButtonDisabled()"></p-button>
+
+            <!-- <p-button (click)="showDialog()" label="Generate Invoice" [disabled]="isGenerateButtonDisabled() && selectedInvoicePeriod === 'All' || !selectedInvoicePeriod"></p-button> -->
+          </td>
+          <td> 
+              <p-dialog header="Enter the required Details" [(visible)]="visible"  [style]="{width: '50vw'}" [modal]="true">
+                
+                  <!-- <app-invoice-details></app-invoice-details> -->
+                  <div class="invoice-fields">
+                    <!-- <div class="form-group">
+                        <label for="invoiceNumber">Invoice Number</label>
+                        <input class="input1" type="text " id="invoiceNumber" />
+                    </div> -->
+                    <div class="form-group">
+                      <label for="invoicePeriod">Invoice Period</label>
+                      <input style="color: black;" class="input1" type="text" id="invoicePeriod" [(ngModel)]="selectedInvoicePeriod" [disabled]="isButtonDisabled" [(ngModel)]="addInvoice.invoicePeriod"/>
+                  </div>
+
+
+                  <div>
+                    <div class="grid-item">
+                      <label for="departmentIdDropdown">Department ID:</label>
+                      <select id="departmentIdDropdown" [(ngModel)]="departmentData.selectedDepartmentId" (change)="onDepartmentIdChange()" [(ngModel)]="addInvoice.departmentId">
+                        <option *ngFor="let id of departmentData.departmentIds" [value]="id">{{ id }}</option>
+                      </select>
+                      
+                      
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div class="grid-item">
+                      <label for="departmentNameDropdown">Department Name:</label>
+                      <select id="departmentNameDropdown" [(ngModel)]="departmentData.selectedDepartmentName" [(ngModel)]="addInvoice.departmentName">
+                        <!-- Default option when no ID is selected -->
+                        <option *ngIf="!departmentData.selectedDepartmentId" value="">Select a Department ID</option>
+                        <!-- Dynamic options based on selected department names -->
+                        <option *ngFor="let department of departmentData.departmentNames" [value]="department" [hidden]="!departmentData.selectedDepartmentId">{{ department }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  
+                    <div class="form-group">
+                      
+                      <!-- <input class="input4" type="text" id="totalAmount" [(ngModel)]="totalAmount" readonly /> -->
+                      <div>Total Amount: {{ totalAmount }}</div>
+                    </div>
+                  </div>
+                    <button mat-raised-button color="primary"  (click)="showDialog()" (click)="generateInvoice1()">Submit Invoice</button>  
+              </p-dialog>
+          </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+  <!-- Table Ends -->
+</div>

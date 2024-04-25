@@ -1,0 +1,75 @@
+.top{
+    
+    padding-top: 1%;
+    padding-bottom: 0.01%;
+    background-color: #04246a;
+    color: white;  
+    font-size: x-large;
+}
+
+.body {
+    margin-top: 20px;
+    
+    font-size: large;
+    height: 95vh;
+    border: 2.5px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    padding-left: 1%;
+    padding-top: 1%;
+    padding-bottom: 6%;  
+}
+
+.buttons p-button:not(:last-child) { 
+   padding-top: 0%;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 5px;
+    
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+.create{
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    height: 90vh;
+    width: 40vh;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-top: 5%;
+ 
+}
+
+.estimate{
+
+    background-color: #284b96;
+    color: white;  
+    
+}
+
+.table{
+    margin-left: 1%;
+    margin-right: 0%;
+}
+
+.required::after {
+    content: '*';
+    color: red;
+    margin-left: 5px; 
+    
+}
